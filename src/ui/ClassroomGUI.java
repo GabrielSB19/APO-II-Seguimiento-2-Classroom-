@@ -1,5 +1,6 @@
 package ui;
 
+import java.io.File;
 import java.io.IOException;
 
 import javafx.collections.FXCollections;
@@ -15,8 +16,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 import model.*;
 
 public class ClassroomGUI {
@@ -55,6 +61,11 @@ public class ClassroomGUI {
     private Label lblAccountUser;
     
     @FXML
+    private ImageView imgIcon;
+    
+    private Image imgProfile;
+
+    @FXML
     private TableView<UserAccount> tblMain;
 
     @FXML
@@ -83,6 +94,8 @@ public class ClassroomGUI {
     		mainPaneSign.getChildren().setAll(accountList);
     		
     		lblAccountUser.setText(txtUser.getText());
+    		imgIcon.setImage(classroom.choiceImage(txtUser.getText(), txtPass.getText()));
+    		
     		onTable();
     		
     	} else if (classroom.verificationUser(txtUser.getText(), txtPass.getText()).equals("disapproved")) {
@@ -118,13 +131,10 @@ public class ClassroomGUI {
     }
     
     @FXML
-    void onCreateAccount(ActionEvent event) {
-
-    	if(!txtUserC.getText().isEmpty() && !txtPassC.getText().isEmpty()) {
+    public void onCreateAccount(ActionEvent event) {	
+    	if(!txtUserC.getText().isEmpty() && !txtPassC.getText().isEmpty() && !(imgProfile == null)) {
     		
-    		classroom.addUserAccount(txtUserC.getText(), txtPassC.getText());
-        	
-    		
+    		classroom.addUserAccount(txtUserC.getText(), txtPassC.getText(), imgProfile);
         	
         	Alert alertCreateAccount = new Alert(AlertType.INFORMATION);
         	alertCreateAccount.setTitle("Account created");
@@ -132,11 +142,14 @@ public class ClassroomGUI {
         	alertCreateAccount.setContentText("The new Account has been created");
     	
         	alertCreateAccount.showAndWait();
+        	
+        	imgProfile = null;
     	}
     	else {
     		
     		txtUserC.clear();
     		txtPassC.clear();
+    		imgProfile = null;
     		
     		Alert alertErrorCreateAccount = new Alert(AlertType.ERROR);
     		alertErrorCreateAccount.setTitle("Validation Error");
@@ -148,7 +161,7 @@ public class ClassroomGUI {
     }
     
     @FXML
-    void onLogOut(ActionEvent event) throws IOException {
+    public void onLogOut(ActionEvent event) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
     	
     	fxmlLoader.setController(this);
@@ -167,5 +180,32 @@ public class ClassroomGUI {
     	tblUser.setCellValueFactory(new PropertyValueFactory<UserAccount,String>("username"));
     }
 
+    @FXML
+    public void openFileChosser(ActionEvent event) {
+    	FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle("Select a image");
+    	fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+    	
+    	Stage stage = (Stage)mainPaneSign.getScene().getWindow();
+    	File iconImage = fileChooser.showOpenDialog(stage);
+    	imgProfile = new Image(iconImage.toURI().toString());
+    	
+    	if(imgProfile != null) {
+    		Alert alertCreateAccount = new Alert(AlertType.INFORMATION);
+        	alertCreateAccount.setTitle("Photo uploaded");
+        	alertCreateAccount.setHeaderText("New photo");
+        	alertCreateAccount.setContentText("The photo selected has been uploaded");
+    	
+        	alertCreateAccount.showAndWait();
+    	}
+    	else {
+    		Alert alertErrorCreateAccount = new Alert(AlertType.ERROR);
+    		alertErrorCreateAccount.setTitle("Photo Error");
+    		alertErrorCreateAccount.setHeaderText("Photo not selected");
+    		alertErrorCreateAccount.setContentText("The photo selected has not been uploaded");
+    	
+    		alertErrorCreateAccount.showAndWait();
+    	}
+    }
 }
 

@@ -2,6 +2,9 @@ package model;
 
 import java.util.ArrayList;
 
+import javafx.scene.image.Image;
+
+
 public class Classroom {
 	
 	private ArrayList<UserAccount> listUser;
@@ -10,8 +13,8 @@ public class Classroom {
 		listUser = new ArrayList<UserAccount>();
 	}
 	
-	public void addUserAccount(String username, String password) {
-		listUser.add(new UserAccount(username, password));
+	public void addUserAccount(String username, String password, Image image) {
+		listUser.add(new UserAccount(username, password, image));
 	}
 	
 	public ArrayList<UserAccount> getUserAccount(){
@@ -20,16 +23,29 @@ public class Classroom {
 	
 	public String verificationUser(String username, String password) {
 		String msg = null;
-		for(int i = 0; i<listUser.size(); i++) {
+		boolean out = false;
+		for(int i = 0; i<listUser.size() && !out; i++) {
 			if(listUser.get(i).getUsername().equals(username) && listUser.get(i).getPassword().equals(password)) {
 				msg = "approved";
+				out = true;
 			}
 			else {
 				msg = "disapproved";
 			}
 		}
 		return msg;
-		
 	}
-
+	
+	public Image choiceImage(String username, String password) {
+		boolean out = false;
+		Image chosenImage = null;
+		for(int i = 0; i<listUser.size() && !out; i++) {
+			if(listUser.get(i).getUsername().equals(username) && listUser.get(i).getPassword().equals(password)) {
+				chosenImage = listUser.get(i).getIconImage();
+				out = true;
+			}
+			
+		}
+		return chosenImage;
+	}
 }
