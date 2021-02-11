@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane fx:id="mainPaneSign" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="234.0" layoutY="14.0" text="Join to Classroom">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="201.0" layoutY="40.0" text="Create your account">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="138.0" layoutY="85.0" text="Username:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtUserC" layoutX="254.0" layoutY="83.0" prefHeight="31.0" prefWidth="198.0" />
+      <Label layoutX="140.0" layoutY="124.0" text="Password:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="txtPassC" layoutX="254.0" layoutY="122.0" prefHeight="31.0" prefWidth="198.0" />
+      <Label layoutX="117.0" layoutY="164.0" text="Profile Photo:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField layoutX="254.0" layoutY="162.0" prefHeight="31.0" prefWidth="198.0" />
+      <Button layoutX="467.0" layoutY="162.0" mnemonicParsing="false" text="Browse" />
+      <Label layoutX="160.0" layoutY="204.0" text="Gender:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <RadioButton layoutX="254.0" layoutY="207.0" mnemonicParsing="false" text="Male" />
+      <RadioButton layoutX="324.0" layoutY="207.0" mnemonicParsing="false" text="Female" />
+      <RadioButton layoutX="409.0" layoutY="207.0" mnemonicParsing="false" text="Other" />
+      <Label layoutX="161.0" layoutY="242.0" text=" Career:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <CheckBox layoutX="254.0" layoutY="245.0" mnemonicParsing="false" text="Software Engineering" />
+      <CheckBox layoutX="254.0" layoutY="266.0" mnemonicParsing="false" text="Telematic Engineering" />
+      <CheckBox layoutX="254.0" layoutY="287.0" mnemonicParsing="false" text="Industrial Engineering" />
+      <Label layoutX="142.0" layoutY="322.0" text="  Birthday:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <DatePicker layoutX="252.0" layoutY="320.0" prefHeight="31.0" prefWidth="198.0" />
+      <Label layoutX="88.0" layoutY="360.0" text="Favorite Browser:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ChoiceBox layoutX="252.0" layoutY="358.0" prefHeight="31.0" prefWidth="198.0" />
+      <Button layoutX="286.0" layoutY="402.0" mnemonicParsing="false" onAction="#onCreateAccount" prefHeight="39.0" prefWidth="169.0" text="Create a account">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="156.0" layoutY="402.0" mnemonicParsing="false" onAction="#onSignIn" prefHeight="39.0" prefWidth="107.0" text="Sign In">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>
