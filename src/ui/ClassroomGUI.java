@@ -2,6 +2,7 @@ package ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +19,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -88,20 +91,30 @@ public class ClassroomGUI {
 
     @FXML
     private CheckBox cbIndustrial;
+    
+    @FXML
+    private DatePicker dpDay;
+    
+    @FXML
+    private ChoiceBox<String> chbBrowser;
 
     @FXML
     private TableView<UserAccount> tblMain;
 
     @FXML
     private TableColumn<UserAccount, String> tblUser;
-    
-
+   
     @FXML
     private TableColumn<UserAccount, String> tblGender;
     
     @FXML
     private TableColumn<UserAccount, String> tblEng;
 
+    @FXML
+    private TableColumn<UserAccount, String> tblDay;
+    
+    @FXML
+    private TableColumn<UserAccount, String> tblBr;
 
     @FXML
     void onStart(ActionEvent event) throws IOException {
@@ -149,6 +162,13 @@ public class ClassroomGUI {
     	
     	mainPaneEnter.getChildren().clear();
     	mainPaneEnter.getChildren().setAll(createAccount);
+    	
+    	chbBrowser.getItems().add("Chrome");
+    	chbBrowser.getItems().add("Brave");
+    	chbBrowser.getItems().add("Chrome");
+    	chbBrowser.getItems().add("Edge");
+    	chbBrowser.getItems().add("Opera");
+    	chbBrowser.getItems().add("Firefox");
     }
     
     @FXML
@@ -165,10 +185,13 @@ public class ClassroomGUI {
     @FXML
     public void onCreateAccount(ActionEvent event) {	
     	if(!txtUserC.getText().isEmpty() && !txtPassC.getText().isEmpty() && !(imgProfile == null) 
-    			&& genderSelect(event) != "" && careerCheck(event) != "") {
+    	   && genderSelect(event) != "" && careerCheck(event) != "" && !(onSelectDay(event) == "")
+    	   && !(onSelectBrowser(event) == "")) {
     		
     		classroom.addUserAccount(txtUserC.getText(), txtPassC.getText(), imgProfile, genderSelect(event),
-    				careerCheck(event));
+    				  careerCheck(event), onSelectDay(event), onSelectBrowser(event));
+    		
+    		System.out.println("XD: "+ onSelectBrowser(event));
         	
         	Alert alertCreateAccount = new Alert(AlertType.INFORMATION);
         	alertCreateAccount.setTitle("Account created");
@@ -214,6 +237,8 @@ public class ClassroomGUI {
     	tblUser.setCellValueFactory(new PropertyValueFactory<UserAccount,String>("username"));
     	tblGender.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("gender"));
     	tblEng.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("career"));
+    	tblDay.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("dayBirthday"));
+    	tblBr.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("br"));
     	
     }
 
@@ -259,7 +284,7 @@ public class ClassroomGUI {
 		return gender;
     }
     
-    public String careerCheck(ActionEvent even) {
+    public String careerCheck(ActionEvent event) {
     	String career = "";
     	if(cbSoftware.isSelected()) {
     		career = cbSoftware.getText() + "";
@@ -271,6 +296,23 @@ public class ClassroomGUI {
     		career = cbIndustrial.getText()+ "";
     	}
     	return career;
+    }
+    
+    public String onSelectDay(ActionEvent event) {
+    	String day = "";
+    	if(dpDay.getValue() != null) {
+    		LocalDate test = dpDay.getValue();
+    		day = test.toString();
+    	}
+		return day;
+    }
+    
+    public String onSelectBrowser(ActionEvent event) {
+    	String br = "";
+    	if(chbBrowser.getValue() != null) {
+    		br = chbBrowser.getValue()+"";
+    	}
+    	return br;
     }
     
 }

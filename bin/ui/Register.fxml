@@ -66,13 +66,13 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <DatePicker layoutX="252.0" layoutY="320.0" prefHeight="31.0" prefWidth="198.0" />
+      <DatePicker fx:id="dpDay" editable="false" layoutX="252.0" layoutY="320.0" prefHeight="31.0" prefWidth="198.0" />
       <Label layoutX="88.0" layoutY="360.0" text="Favorite Browser:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ChoiceBox layoutX="252.0" layoutY="358.0" prefHeight="31.0" prefWidth="198.0" />
+      <ChoiceBox fx:id="chbBrowser" layoutX="252.0" layoutY="358.0" prefHeight="31.0" prefWidth="198.0" />
       <Button layoutX="286.0" layoutY="402.0" mnemonicParsing="false" onAction="#onCreateAccount" prefHeight="39.0" prefWidth="169.0" text="Create a account">
          <font>
             <Font size="18.0" />

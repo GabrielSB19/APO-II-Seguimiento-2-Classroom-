@@ -35,8 +35,8 @@
           <TableColumn fx:id="tblUser" prefWidth="116.0" text="Username" />
           <TableColumn fx:id="tblGender" prefWidth="116.0" text="Gender" />
             <TableColumn fx:id="tblEng" prefWidth="116.0" text="Engineering" />
-            <TableColumn prefWidth="116.0" text="Birthday" />
-            <TableColumn prefWidth="116.0" text="Browser" />
+            <TableColumn fx:id="tblDay" prefWidth="116.0" text="Birthday" />
+            <TableColumn fx:id="tblBr" prefWidth="116.0" text="Browser" />
         </columns>
       </TableView>
    </children>

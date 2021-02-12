@@ -9,13 +9,18 @@ public class UserAccount {
 	private Image iconImage;
 	private String gender;
 	private String career;
+	private String dayBirthday;
+	private String br;
 	
-	public UserAccount(String username, String password, Image image, String gender, String career) {
+	public UserAccount(String username, String password, Image image, String gender, 
+					   String career, String dayBirthday, String br) {
 		this.username = username;
 		this.password = password;
 		this.iconImage = image;
 		this.gender = gender;
 		this.career = career;
+		this.dayBirthday = dayBirthday;
+		this.br = br;
 	}
 	
 	public String getUsername() {
@@ -36,5 +41,13 @@ public class UserAccount {
 	
 	public String getCareer() {
 		return career;
+	}
+	
+	public String getDayBirthday() {
+		return dayBirthday;
+	}
+	
+	public String getBr() {
+		return br;
 	}
 }
