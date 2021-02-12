@@ -72,6 +72,10 @@ public class ClassroomGUI {
     private Image imgProfile;
     
     @FXML
+    private TextField txtDirectory;
+
+    
+    @FXML
     private RadioButton rbMale;
     
     @FXML
@@ -117,7 +121,7 @@ public class ClassroomGUI {
     private TableColumn<UserAccount, String> tblBr;
 
     @FXML
-    void onStart(ActionEvent event) throws IOException {
+    public void onStart(ActionEvent event) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
     	
     	fxmlLoader.setController(this);
@@ -128,33 +132,43 @@ public class ClassroomGUI {
     }
     
     @FXML
-    void onLogIn(ActionEvent event) throws IOException {
-    	if(classroom.verificationUser(txtUser.getText(), txtPass.getText()).equals("approved")) {
-    		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AccountList.fxml"));
-    		
-    		fxmlLoader.setController(this);
-    		Parent accountList = fxmlLoader.load();
-    		
-    		mainPaneSign.getChildren().clear();
-    		mainPaneSign.getChildren().setAll(accountList);
-    		
-    		lblAccountUser.setText(txtUser.getText());
-    		imgIcon.setImage(classroom.choiceImage(txtUser.getText(), txtPass.getText()));
-    		
-    		onTable();
-    		
-    	} else if (classroom.verificationUser(txtUser.getText(), txtPass.getText()).equals("disapproved")) {
+    public void onLogIn(ActionEvent event) throws IOException {
+    	
+    	try{
+    		if(classroom.verificationUser(txtUser.getText(), txtPass.getText()).equals("approved")) {
+        		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AccountList.fxml"));
+        		
+        		fxmlLoader.setController(this);
+        		Parent accountList = fxmlLoader.load();
+        		
+        		mainPaneSign.getChildren().clear();
+        		mainPaneSign.getChildren().setAll(accountList);
+        		
+        		lblAccountUser.setText(txtUser.getText());
+        		imgIcon.setImage(classroom.choiceImage(txtUser.getText(), txtPass.getText()));
+        		
+        		onTable();
+        		
+        	} else if (classroom.verificationUser(txtUser.getText(), txtPass.getText()).equals("disapproved")) {
+        		Alert alertErrorCreateAccount = new Alert(AlertType.ERROR);
+        		alertErrorCreateAccount.setTitle("Log in incorret");
+        		alertErrorCreateAccount.setHeaderText("Incorrect data");
+        		alertErrorCreateAccount.setContentText("the username or password given are incorrect");
+        	
+        		alertErrorCreateAccount.showAndWait();
+        	}
+    	}catch(NullPointerException e) {
     		Alert alertErrorCreateAccount = new Alert(AlertType.ERROR);
-    		alertErrorCreateAccount.setTitle("Log in incorret");
-    		alertErrorCreateAccount.setHeaderText("Incorrect data");
-    		alertErrorCreateAccount.setContentText("the username or password given are incorrect");
+    		alertErrorCreateAccount.setTitle("there are no accounts");
+    		alertErrorCreateAccount.setHeaderText("Accounts not found");
+    		alertErrorCreateAccount.setContentText("Please create at least one account");
     	
     		alertErrorCreateAccount.showAndWait();
     	}
     }
 
     @FXML
-    void onSingUp(ActionEvent event) throws IOException {
+    public void onSingUp(ActionEvent event) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Register.fxml"));
     	
     	fxmlLoader.setController(this);
@@ -172,7 +186,7 @@ public class ClassroomGUI {
     }
     
     @FXML
-    void onSignIn(ActionEvent event) throws IOException {
+    public void onSignIn(ActionEvent event) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
     	
     	fxmlLoader.setController(this);
@@ -190,8 +204,6 @@ public class ClassroomGUI {
     		
     		classroom.addUserAccount(txtUserC.getText(), txtPassC.getText(), imgProfile, genderSelect(event),
     				  careerCheck(event), onSelectDay(event), onSelectBrowser(event));
-    		
-    		System.out.println("XD: "+ onSelectBrowser(event));
         	
         	Alert alertCreateAccount = new Alert(AlertType.INFORMATION);
         	alertCreateAccount.setTitle("Account created");
@@ -244,30 +256,45 @@ public class ClassroomGUI {
 
     @FXML
     public void openFileChosser(ActionEvent event) {
-    	FileChooser fileChooser = new FileChooser();
-    	fileChooser.setTitle("Select a image");
-    	fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
-    	
-    	Stage stage = (Stage)mainPaneSign.getScene().getWindow();
-    	File iconImage = fileChooser.showOpenDialog(stage);
-    	imgProfile = new Image(iconImage.toURI().toString());
-    	
-    	if(imgProfile != null) {
-    		Alert alertCreateAccount = new Alert(AlertType.INFORMATION);
-        	alertCreateAccount.setTitle("Photo uploaded");
-        	alertCreateAccount.setHeaderText("New photo");
-        	alertCreateAccount.setContentText("The photo selected has been uploaded");
-    	
-        	alertCreateAccount.showAndWait();
-    	}
-    	else {
-    		Alert alertErrorCreateAccount = new Alert(AlertType.ERROR);
-    		alertErrorCreateAccount.setTitle("Photo Error");
-    		alertErrorCreateAccount.setHeaderText("Photo not selected");
-    		alertErrorCreateAccount.setContentText("The photo selected has not been uploaded");
+    	 try{
+    		 FileChooser fileChooser = new FileChooser();
+    	    	fileChooser.setTitle("Select a image");
+    	    	fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+    	    	
+    	    	Stage stage = (Stage)mainPaneSign.getScene().getWindow();
+    	    	File iconImage = fileChooser.showOpenDialog(stage);
+    	    	imgProfile = new Image(iconImage.toURI().toString());
+    	    	
+    	    	if(imgProfile != null) {
+    	    		
+    	    		txtDirectory.setText(iconImage.getPath().toString());
+    	    		
+    	    		Alert alertCreateAccount = new Alert(AlertType.INFORMATION);
+    	        	alertCreateAccount.setTitle("Photo uploaded");
+    	        	alertCreateAccount.setHeaderText("New photo");
+    	        	alertCreateAccount.setContentText("The photo selected has been uploaded");
+    	    	
+    	        	alertCreateAccount.showAndWait();
+    	    	}
+    	    	else {
+    	    		Alert alertErrorCreateAccount = new Alert(AlertType.ERROR);
+    	    		alertErrorCreateAccount.setTitle("Photo Error");
+    	    		alertErrorCreateAccount.setHeaderText("Photo not selected");
+    	    		alertErrorCreateAccount.setContentText("The photo selected has not been uploaded");
+    	    	
+    	    		alertErrorCreateAccount.showAndWait();
+    	    	}
+    	 } catch(NullPointerException e){
+    	 	
+    	 	Alert alertErrorCreateAccount = new Alert(AlertType.ERROR);
+    		alertErrorCreateAccount.setTitle("No image");
+    		alertErrorCreateAccount.setHeaderText("image not found");
+    		alertErrorCreateAccount.setContentText("Please select a image");
     	
     		alertErrorCreateAccount.showAndWait();
-    	}
+    	 }
+    	 
+    	
     }
     
     public String genderSelect(ActionEvent event) {
