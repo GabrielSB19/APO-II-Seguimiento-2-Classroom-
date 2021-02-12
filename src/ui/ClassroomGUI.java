@@ -11,10 +11,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -64,12 +67,41 @@ public class ClassroomGUI {
     private ImageView imgIcon;
     
     private Image imgProfile;
+    
+    @FXML
+    private RadioButton rbMale;
+    
+    @FXML
+    private RadioButton rbFamale;
+
+    @FXML
+    private RadioButton rbOther;
+    
+    @FXML
+    private ToggleGroup selectGender;
+    
+    @FXML
+    private CheckBox cbSoftware;
+
+    @FXML
+    private CheckBox cbTelematic;
+
+    @FXML
+    private CheckBox cbIndustrial;
 
     @FXML
     private TableView<UserAccount> tblMain;
 
     @FXML
     private TableColumn<UserAccount, String> tblUser;
+    
+
+    @FXML
+    private TableColumn<UserAccount, String> tblGender;
+    
+    @FXML
+    private TableColumn<UserAccount, String> tblEng;
+
 
     @FXML
     void onStart(ActionEvent event) throws IOException {
@@ -132,9 +164,11 @@ public class ClassroomGUI {
     
     @FXML
     public void onCreateAccount(ActionEvent event) {	
-    	if(!txtUserC.getText().isEmpty() && !txtPassC.getText().isEmpty() && !(imgProfile == null)) {
+    	if(!txtUserC.getText().isEmpty() && !txtPassC.getText().isEmpty() && !(imgProfile == null) 
+    			&& genderSelect(event) != "" && careerCheck(event) != "") {
     		
-    		classroom.addUserAccount(txtUserC.getText(), txtPassC.getText(), imgProfile);
+    		classroom.addUserAccount(txtUserC.getText(), txtPassC.getText(), imgProfile, genderSelect(event),
+    				careerCheck(event));
         	
         	Alert alertCreateAccount = new Alert(AlertType.INFORMATION);
         	alertCreateAccount.setTitle("Account created");
@@ -178,6 +212,9 @@ public class ClassroomGUI {
     	
     	tblMain.setItems(newListUser);
     	tblUser.setCellValueFactory(new PropertyValueFactory<UserAccount,String>("username"));
+    	tblGender.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("gender"));
+    	tblEng.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("career"));
+    	
     }
 
     @FXML
@@ -207,5 +244,34 @@ public class ClassroomGUI {
     		alertErrorCreateAccount.showAndWait();
     	}
     }
+    
+    public String genderSelect(ActionEvent event) {
+    	String gender = "";
+    	if(rbMale.isSelected()) {
+    		gender = "Male";
+    	}
+    	else if(rbFamale.isSelected()) {
+    		gender = "Famale";
+    	}
+    	else if(rbOther.isSelected()) {
+    		gender = "Other";
+    	}
+		return gender;
+    }
+    
+    public String careerCheck(ActionEvent even) {
+    	String career = "";
+    	if(cbSoftware.isSelected()) {
+    		career = cbSoftware.getText() + "";
+    	}
+    	if(cbTelematic.isSelected()) {
+    		career = cbTelematic.getText() + "";
+    	}
+    	if(cbIndustrial.isSelected()) {
+    		career = cbIndustrial.getText()+ "";
+    	}
+    	return career;
+    }
+    
 }
 

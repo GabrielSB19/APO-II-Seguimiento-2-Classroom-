@@ -13,8 +13,8 @@ public class Classroom {
 		listUser = new ArrayList<UserAccount>();
 	}
 	
-	public void addUserAccount(String username, String password, Image image) {
-		listUser.add(new UserAccount(username, password, image));
+	public void addUserAccount(String username, String password, Image image, String gender, String career) {
+		listUser.add(new UserAccount(username, password, image, gender, career));
 	}
 	
 	public ArrayList<UserAccount> getUserAccount(){
