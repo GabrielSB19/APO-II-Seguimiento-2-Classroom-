@@ -197,7 +197,7 @@ public class ClassroomGUI {
     }
     
     @FXML
-    public void onCreateAccount(ActionEvent event) {	
+    public void onCreateAccount(ActionEvent event) throws IOException {	
     	if(!txtUserC.getText().isEmpty() && !txtPassC.getText().isEmpty() && !(imgProfile == null) 
     	   && genderSelect(event) != "" && careerCheck(event) != "" && !(onSelectDay(event) == "")
     	   && !(onSelectBrowser(event) == "")) {
@@ -213,6 +213,7 @@ public class ClassroomGUI {
         	alertCreateAccount.showAndWait();
         	
         	imgProfile = null;
+        	onSingUp(event);
     	}
     	else {
     		
@@ -250,8 +251,7 @@ public class ClassroomGUI {
     	tblGender.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("gender"));
     	tblEng.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("career"));
     	tblDay.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("dayBirthday"));
-    	tblBr.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("br"));
-    	
+    	tblBr.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("br"));	
     }
 
     @FXML
